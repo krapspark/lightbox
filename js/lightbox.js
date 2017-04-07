@@ -1,4 +1,4 @@
-(function() {
+var lightbox = (function() {
 
 var PLACEHOLDER = '%NAME%';
 var URL = 'https://www.googleapis.com/customsearch/v1?cx=006168523920436498670:-alofrs5wsa&key=AIzaSyDV2IycU_06wj4R8aE7ozfyer4iRu7FiJQ&searchType=image&q='
@@ -8,7 +8,14 @@ var rootNode = document.getElementById('image-container');
 var animalData;
 
 var DATA_ID = 'data-id';
-var THUMBNAIL_CLASS = 'thumbnail';
+var MAX_ENTRY = 10;
+
+var CLASSES = {
+  THUMBNAIL: 'thumbnail',
+  VISIBLE: 'visible',
+  NO_LEFT: 'no-left',
+  NO_RIGHT: 'no-right',
+}
 
 var currentIndex = 0;
 
@@ -55,7 +62,7 @@ function renderThumbnails(data) {
     animalData = data.items;
     data.items.forEach(function(item, index) {
       var container = el('div');
-      container.classList.add(THUMBNAIL_CLASS);
+      container.classList.add(CLASSES.THUMBNAIL);
       container.setAttribute(DATA_ID, index);
 
       var image = el('img');
@@ -83,38 +90,54 @@ function addLightboxButtonHandlers() {
 }
 
 function showLeftPicture() {
-  showLightbox(--currentIndex);
+  if (currentIndex > 0) {
+    showLightbox(--currentIndex);
+  }
 }
 
 function showRightPicture() {
-  showLightbox(++currentIndex);
+  if (currentIndex < MAX_ENTRY - 1) {
+    showLightbox(++currentIndex);
+  }
 }
 
 function showLightbox(index) {
-  if (index) {
+  if (index >= 0 && index < MAX_ENTRY) {
     var data = animalData[index];
     currentIndex = index;
     var lightboxContainer = getEl('lightbox-container');
-    lightboxContainer.classList.add('visible');
+    lightboxContainer.classList.add(CLASSES.VISIBLE);
 
     var imageTitle = getEl('image-title');
     imageTitle.innerText = data.title;
 
     var imageContainer = getEl('lightbox-image-container');
 
-    while(imageContainer.firstChild) {
+    while (imageContainer.firstChild) {
       imageContainer.removeChild(imageContainer.firstChild);
     }
 
     var image = el('img');
     image.src = data.link;
     imageContainer.appendChild(image);
+
+    if (index === 0) {
+      lightboxContainer.classList.add(CLASSES.NO_LEFT);
+    } else {
+      lightboxContainer.classList.remove(CLASSES.NO_LEFT);
+    }
+
+    if (index === MAX_ENTRY - 1) {
+      lightboxContainer.classList.add(CLASSES.NO_RIGHT);
+    } else {
+      lightboxContainer.classList.remove(CLASSES.NO_RIGHT);
+    }
   }
 }
 
 function dismissLightbox() {
   var lightboxContainer = getEl('lightbox-container');
-  lightboxContainer.classList.remove('visible');
+  lightboxContainer.classList.remove(CLASSES.VISIBLE);
 }
 
 function attachThumbnailHandler() {
@@ -123,8 +146,8 @@ function attachThumbnailHandler() {
   container.onclick = function(e) {
     var target = e.target;
     while(target && target.getAttribute('id') !== 'image-container') {
-      if (target.classList.contains(THUMBNAIL_CLASS)) {
-        showLightbox(target.getAttribute(DATA_ID));
+      if (target.classList.contains(CLASSES.THUMBNAIL)) {
+        showLightbox(Number(target.getAttribute(DATA_ID)));
       }
 
       target = target.parentNode;
@@ -132,9 +155,17 @@ function attachThumbnailHandler() {
   }
 }
 
-fetchAnimals('dog');
-addAnimalButtonHandlers();
-addLightboxButtonHandlers();
-attachThumbnailHandler();
+function init() {
+  fetchAnimals('dog');
+  addAnimalButtonHandlers();
+  addLightboxButtonHandlers();
+  attachThumbnailHandler();
+}
+
+return {
+  init: init
+};
 
 })();
+
+lightbox.init();

@@ -7,7 +7,6 @@ button:focus {
   outline: none;
 }
 
-
 #root {
   margin: 0 auto;
   max-width: 800px;
@@ -55,13 +54,13 @@ button:focus {
 }
 
 .thumbnail {
-  width: 100px;
+  width: 125px;
   height: 100px;
   margin: 20px;
+  padding: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px;
   cursor: pointer;
   background-color: #E8A723;
   transition: background-color 250ms;
@@ -134,6 +133,16 @@ button:focus {
   background-color: rgba(255, 255, 255, .4);
 }
 
+#lightbox-container.no-left #left-button {
+  opacity: 0;
+  cursor: default;
+}
+
+#lightbox-container.no-right #right-button {
+  opacity: 0;
+  cursor: default;
+}
+
 #left-button {
   background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAwIDEwMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwYXRoIGQ9Ik02Ny4yLDkzLjVjLTIuMywwLTQuNi0wLjktNi40LTIuNkwyNi40LDU2LjRjLTMuNS0zLjUtMy41LTkuMiwwLTEyLjdMNjAuOSw5LjJjMy41LTMuNSw5LjItMy41LDEyLjcsMCAgYzMuNSwzLjUsMy41LDkuMiwwLDEyLjdMNDUuNSw1MGwyOC4xLDI4LjFjMy41LDMuNSwzLjUsOS4yLDAsMTIuN0M3MS44LDkyLjYsNjkuNSw5My41LDY3LjIsOTMuNXoiLz48L3N2Zz4=");
 }
@@ -162,16 +171,3 @@ button:focus {
 #close-button:hover {
   background-color: rgba(255, 255, 255, .3);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
