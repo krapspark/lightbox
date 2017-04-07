@@ -1,10 +1,35 @@
 <html>
   <head>
-    <script src="./js/lightbox.js" ></script>
+    <link rel="stylesheet" href="./less/lightbox.css" />
   </head>
   <body>
-    <div>
-      Hola
+    <div id="root">
+      <h1 class="title">
+        Animal Lightbox
+      </h1>
+      <div id="button-row">
+        <button data-animal="dog" class="animal-button">
+          🐶
+        </button>
+        <button data-animal="cat" class="animal-button">
+          🐱
+        </button>
+        <button data-animal="panda" class="animal-button">
+          🐼
+        </button>
+      </div>
+      <div id="image-container"></div>
+    </div>
+    <div id="lightbox-container">
+      <button id="left-button" class="lightbox-button"></button>
+      <div id="lightbox-image-content">
+        <h2 id="image-title"></h2>
+        <button id="close-button"></button>
+        <div id="lightbox-image-container">
+        </div>
+      </div>
+      <button id="right-button" class="lightbox-button"></button>
     </div>
   </body>
+  <script src="./js/lightbox.js" ></script>
 </html>
